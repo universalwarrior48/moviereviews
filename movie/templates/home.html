@@ -1,0 +1,97 @@
+{% extends "base.html" %} {% block mystyle %}
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<style>
+  body {
+    font-family: Arial;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  form.example input[type="text"] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    margin-top: 10px;
+  }
+
+  form.example button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #2196f3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  form.example button:hover {
+    background: #0b7dda;
+  }
+
+  form.example::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+</style>
+{% endblock mystyle %} {% block content %}
+<form
+  class="example"
+  action="{% url 'about' %}"
+  style="margin: auto; max-width: 300px"
+  method="POST"
+>
+  {% csrf_token %}
+  <input type="text" placeholder="Movie Name.." name="searchMovie" />
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+
+{% comment %}
+<p>Searching for {{ searchTerm }}</p>
+<br />
+{% endcomment %}
+<br />
+
+<div class="row row-cols-1 row-cols-md-2 g-0">
+  {% for movie in movies %}
+  <div v-for="movie in movies" class="col">
+    <div
+      class="card mb-3 bg-dark text-light px-0"
+      style="max-width: 540px; margin-left: 10px"
+    >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img class="card-img-top" src="{{ movie.image.url }}" />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            {% comment %} <h5 class="card-title fw-bold">{{ movie.title }}</h5> {% endcomment %}
+            <a href='{% url "detail" movie.id %}'>
+              <h5 class="card-title fw-bold">{{ movie.title }}</h5>
+            </a>
+            <p class="card-text">{{ movie.description }}</p>
+            {% comment %} {% if movie.url %}
+            <a href="{{ movie.url }}" target="_blank" class="btn btn-primary">
+              Watch Now
+            </a>
+            {% endif %} {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
