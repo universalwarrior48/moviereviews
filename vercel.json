@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "moviereview/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "moviereview/wsgi.py"
+      }
+    ]
+}
